@@ -9,12 +9,12 @@ class User {
     required this.age
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      "name": name,
-      "gender": gender,
-      "hobby": hobby,
-      "age": age
-    };
+  factory User.fromMap(Map<String, dynamic> map) {
+    return User(
+      name: map['name'] ?? 'No Name',
+      age: map['age'] ?? 0,
+      hobby: map['hobby'] ?? 'Not specified',
+      gender: map['gender'] ?? 'Not specified',
+    );
   }
 }

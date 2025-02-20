@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_firestore/models/user.dart';
 import 'package:flutter_firebase_firestore/repository/user_repository.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final UserRepository _userRepository = UserRepository();
-  late Future<List<Map<String, dynamic>>> _userData;
+  late Future<List<User>> _userData;
 
   @override
   void initState() {
@@ -53,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Center(child: Text("No users found"));
                     }
 
-                    List<Map<String, dynamic>> users = snapshot.data!;
+                    List<User> users = snapshot.data!;
 
                     return _userContent(users);
                   })
@@ -64,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _userContent(List<Map<String, dynamic>> users) {
+  Widget _userContent(List<User> users) {
     return Expanded(
         child: ListView.builder(
       itemCount: users.length,
@@ -82,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  user["name"] ?? "No Name",
+                  user.name,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -94,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Icon(Icons.cake, size: 20, color: Colors.grey),
                     SizedBox(width: 8),
                     Text(
-                      "Age: ${user["age"] ?? "Unknown"}",
+                      "Age: ${user.age}",
                       style: TextStyle(fontSize: 16),
                     ),
                   ],
@@ -105,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Icon(Icons.interests, size: 20, color: Colors.grey),
                     SizedBox(width: 8),
                     Text(
-                      "Hobby: ${user["hobby"] ?? "Not specified"}",
+                      "Hobby: ${user.hobby}",
                       style: TextStyle(fontSize: 16),
                     ),
                   ],
@@ -114,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   children: [
                     Icon(
-                      user["gender"] == "male" 
+                      user.gender == "male" 
                       ? Icons.male 
                       : Icons.female, 
                       size: 20, 
@@ -122,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(width: 8),
                     Text(
-                      "Gender: ${user["gender"] ?? "Not specified"}",
+                      "Gender: ${user.gender}",
                       style: TextStyle(fontSize: 16),
                     ),
                   ],
